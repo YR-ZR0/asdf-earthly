@@ -21,8 +21,7 @@ install_earthly() {
   mkdir -p "${bin_install_path}"
   echo "Downloading earthly from ${download_url}"
   curl -s -L "${download_url}" -o "${download_path}"
-#   tar --wildcards -zxf ${download_path} --directory ${tmp_download_dir} '*/earthly' --strip=1
-  mv ${tmp_download_dir}/earthly ${bin_install_path}
+  mv ${tmp_download_dir}/earthly-${version} ${bin_install_path}
   chmod +x "$bin_install_path"
   rm -f ${download_path}
 }
@@ -34,7 +33,6 @@ get_arch() {
     arch='amd64'
     ;;
   esac
-
   echo ${arch}
 }
 
