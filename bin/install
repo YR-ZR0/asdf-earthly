@@ -31,7 +31,7 @@ get_arch() {
   arch=$(uname -m | tr '[:upper:]' '[:lower:]')
   case ${arch} in
   x86_64)
-    arch='64'
+    arch='amd64'
     ;;
   esac
 
