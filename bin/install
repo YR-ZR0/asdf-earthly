@@ -21,8 +21,8 @@ install_earthly() {
   mkdir -p "${bin_install_path}"
   echo "Downloading earthly from ${download_url}"
   curl -s -L "${download_url}" -o "${download_path}"
-  mv ${tmp_download_dir}/earthly-${version} ${bin_install_path}
-  chmod +x "$bin_install_path"
+  mv ${tmp_download_dir}/earthly-${version} ${bin_install_path}/earthly
+  chmod +x "$bin_install_path/earthly"
   rm -f ${download_path}
 }
 
