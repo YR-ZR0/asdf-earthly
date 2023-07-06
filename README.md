@@ -1,6 +1,6 @@
 # asdf-earthly
 
-This is the plugin repo for asdf-vm/asdf to manage earthly/earthly.
+This is the plugin repo for [asdf-vm/asdf](https://github.com/asdf-vm/asdf.git)  to manage [earthly/earthly](https://github.com/earthly/earthly.git).
 Install
 
 After installing asdf, you can add this plugin like this:
