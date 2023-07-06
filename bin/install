@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
+set -eo pipefail
 
-set -e
-set -o pipefail
-
-ASDF_INSTALL_TYPE=${ASDF_INSTALL_TYPE:-version  }
+ASDF_INSTALL_TYPE=${ASDF_INSTALL_TYPE:-version}
 TMPDIR=${TMPDIR:-/tmp}
-[ -n "$ASDF_INSTALL_VERSION" ] || (>&2 echo 'Missing ASDF_INSTALL_VERSION' && exit 1)
-[ -n "$ASDF_INSTALL_PATH" ] || (>&2 echo 'Missing ASDF_INSTALL_PATH' && exit 1)
+
+[ -n "$ASDF_INSTALL_VERSION" ] || { >&2 echo 'Missing ASDF_INSTALL_VERSION'; exit 1; }
+[ -n "$ASDF_INSTALL_PATH" ] || { >&2 echo 'Missing ASDF_INSTALL_PATH'; exit 1; }
 
 install_earthly() {
   local install_type=$1
@@ -21,38 +20,46 @@ install_earthly() {
   mkdir -p "${bin_install_path}"
   echo "Downloading earthly from ${download_url}"
   curl -s -L "${download_url}" -o "${download_path}"
-  mv ${tmp_download_dir}/earthly-${version} ${bin_install_path}/earthly
+  mv "${tmp_download_dir}/earthly-${version}" "${bin_install_path}/earthly"
   chmod +x "$bin_install_path/earthly"
-  rm -f ${download_path}
+  rm -f "${download_path}"
 }
 
 get_arch() {
-  arch=$(uname -m | tr '[:upper:]' '[:lower:]')
-  case ${arch} in
-  x86_64)
-    arch='amd64'
-    ;;
+  local arch=$(uname -m | tr '[:upper:]' '[:lower:]')
+  case $arch in
+    aarch|arm)
+      arch='arm64'
+      ;;
+    x86_64)
+      arch='amd64'
+      ;;
   esac
-  echo ${arch}
+  echo "$arch"
 }
 
+
 get_tmp_dir() {
-  if [ "${TMPDIR}" = "" ]; then
+  if [ -z "$TMPDIR" ]; then
     echo "$(mktemp -d -t earthly_XXXXXX)"
+  else
+    echo "$TMPDIR"
   fi
-  echo "${TMPDIR}"
 }
 
 get_platform() {
-  plat=$(uname | tr '[:upper:]' '[:lower:]')
-  case ${plat} in
-  linux)
-    plat='linux'
-    ;;
+  local plat=$(uname | tr '[:upper:]' '[:lower:]')
+  case $plat in
+    linux)
+      plat='linux'
+      ;;
+    darwin)
+      plat='darwin'
+      ;;
   esac
-
-  echo ${plat}
+  echo "$plat"
 }
+
 
 get_download_url() {
   local version="$1"
@@ -61,4 +68,4 @@ get_download_url() {
   echo "https://github.com/earthly/earthly/releases/download/v${version}/earthly-${platform}-${arch}"
 }
 
-install_earthly $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
+install_earthly "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"

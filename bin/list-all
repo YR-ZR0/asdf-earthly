@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -eo pipefail
 releases_path=https://api.github.com/repos/earthly/earthly/releases
 cmd="curl -s"
 if [ -n "$OAUTH_TOKEN" ]; then
