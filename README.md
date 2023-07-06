@@ -4,7 +4,7 @@ This is the plugin repo for [asdf-vm/asdf](https://github.com/asdf-vm/asdf.git) 
 Install
 
 After installing asdf, you can add this plugin like this:
-
+```bash
 asdf plugin add earthly https://github.com/YR-ZR0/asdf-earthly
 asdf install earthly 0.7.10
-
+````
