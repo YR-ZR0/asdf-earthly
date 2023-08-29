@@ -28,7 +28,7 @@ install_earthly() {
 get_arch() {
   local arch=$(uname -m | tr '[:upper:]' '[:lower:]')
   case $arch in
-    aarch|arm)
+    aarch64)
       arch='arm64'
       ;;
     x86_64)
