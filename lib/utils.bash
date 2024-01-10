@@ -86,7 +86,7 @@ install_version() {
 
 	(
 		mkdir -p "$install_path"
-		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path/bin"
     	chmod +x "$install_path/$TOOL_NAME"
 
 		local tool_cmd
