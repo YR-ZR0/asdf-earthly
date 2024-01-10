@@ -69,7 +69,7 @@ download_release() {
 	os=$(get_platform)
 	arch=$(get_arch)
 
-	url="$GH_REPO/releases/download/v${version}/$TOOL_NAME-${os}-${arch}.tar.gz"
+	url="$GH_REPO/releases/download/v${version}/$TOOL_NAME-${os}-${arch}"
 
 	echo "* Downloading $TOOL_NAME release $version..."
 	curl "${curl_opts[@]}" -o "$filename" -C - "$url" || fail "Could not download $url"
@@ -87,6 +87,7 @@ install_version() {
 	(
 		mkdir -p "$install_path"
 		cp -r "$ASDF_DOWNLOAD_PATH"/* "$install_path"
+    	chmod +x "$install_path/$TOOL_NAME"
 
 		local tool_cmd
 		tool_cmd="$(echo "$TOOL_TEST" | cut -d' ' -f1)"
